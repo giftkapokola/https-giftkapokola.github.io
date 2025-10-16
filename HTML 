@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gift Kapokola Quotes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Lora&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>Gift Kapokola Quotes</h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="add-quote.html">Add Quote</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="follow.html">Follow Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+    <input type="text" id="search" placeholder="Search quotes...">
+  </header>
+
+  <main id="quotes-container">
+    <!-- Quotes will appear here from Firebase -->
+  </main>
+
+  <footer>
+    ©2025 Gift Kapokola Quotes | All Rights Reserved
+  </footer>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js"></script>
+
+  <script src="app.js"></script>
+</body>
+</html>
