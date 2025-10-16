@@ -1,0 +1,62 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #000;
+  color: #FFD700;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: #111;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+}
+
+header nav ul li a {
+  color: #FFD700;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#quotes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.quote-card {
+  background: #222;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.quote-card img {
+  max-width: 100%;
+  margin-top: 10px;
+}
+
+.quote-actions button {
+  margin-right: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #FFD700;
+  font-size: 18px;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background: #111;
+  margin-top: 20px;
+}
