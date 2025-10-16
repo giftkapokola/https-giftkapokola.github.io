@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Quote | Gift Kapokola Quotes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>Gift Kapokola Quotes</h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="add-quote.html">Add Quote</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Add a New Quote</h2>
+    <form id="quote-form">
+      <input type="text" id="quote-text" placeholder="Quote" required>
+      <input type="text" id="quote-author" placeholder="Author" required>
+      <input type="file" id="quote-image">
+      <button type="submit">Add Quote</button>
+    </form>
+    <p id="status"></p>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js"></script>
+  <script src="add-quote.js"></script>
+</body>
+</html>
