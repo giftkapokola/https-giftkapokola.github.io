@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gift Kapokola Quotes</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Lora&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary-color: #e60000;
+  --bg-color: #ffffff;
+  --text-color: #121212;
+  --card-bg: #f9f9f9;
+  --card-border: #ccc;
+  --button-bg: #e60000;
+  --button-text: #fff;
+}
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #f0f0f0;
+  --card-bg: #1e1e1e;
+  --card-border: #333;
+  --button-bg: #e60000;
+  --button-text: #fff;
+}
+* { box-sizing: border-box; scroll-behavior: smooth; }
+body {
+  margin:0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+header {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--card-bg);
+  position: sticky;
+  top:0;
+  z-index: 100;
+}
+header h1 { font-family: 'Lora', serif; font-size: 1.8rem; color: var(--primary-color); }
+nav a { color: var(--text-color); text-decoration: none; margin-left: 1.5rem; font-weight: 600; }
+nav a:hover { color: var(--primary-color); }
+.theme-toggle { cursor:pointer; background:none; border:2px solid var(--primary-color); color: var(--primary-color); padding:0.3rem 0.6rem; border-radius:5px; font-weight:600; }
+.hero { text-align:center; padding:4rem 2rem; }
+.total-views { position: sticky; top: 120px; background-color: var(--card-bg); padding:0.5rem 1rem; margin:0 auto 1rem auto; width:max-content; border-radius:5px; font-weight:600; text-align:center; }
+.section-title { text-align:center; margin-top:2rem; font-size:1.5rem; color: var(--primary-color); }
+.quotes-container { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1.5rem; padding:2rem; }
+.quote-card { background-color: var(--card-bg); border:1px solid var(--card-border); border-radius:10px; padding:1rem 1.5rem; display:flex; flex-direction:column; justify-content:space-between; opacity:0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; }
+.quote-card.show { opacity:1; transform: translateY(0); }
+.quote-text { font-size:1.1rem; margin-bottom:0.5rem; font-style: italic; }
+.quote-author { font-size:0.9rem; font-weight:600; color: var(--primary-color); margin-bottom:0.5rem; }
+.quote-category { font-size:0.8rem; font-style:italic; margin-bottom:0.5rem; color:#555; }
+.quote-footer { display:flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.quote-footer button { background-color: var(--button-bg); color: var(--button-text); border:none; padding:0.4rem 0.8rem; border-radius:5px; cursor:pointer; font-weight:600; }
+.like-button { transition: transform 0.2s; }
+.like-button.liked { color: var(--primary-color); transform: scale(1.2); }
+.about { padding:3rem 2rem; text-align:center; background-color: var(--card-bg); }
+.about h2 { font-size:1.8rem; margin-bottom:1rem; color: var(--primary-color); }
+.about p { font-size:1.1rem; max-width:700px; margin:0 auto; }
+footer { text-align:center; padding:2rem; background-color: var(--card-bg); font-size:0.9rem; }
+footer a { color: var(--primary-color); text-decoration:none; margin:0 0.5rem; }
+.load-more-btn { display:block; margin:1rem auto; padding:0.6rem 1rem; border:none; border-radius:5px; background-color: var(--button-bg); color: var(--button-text); font-weight:600; cursor:pointer; }
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, bottom 0.3s;
+  z-index: 2000;
+}
+.toast.show {
+  opacity: 1;
+  bottom: 50px;
+}
+
+#searchInput, #newQuoteInput, #newQuoteAuthor, #newQuoteCategory { padding:0.5rem 1rem; width:90%; max-width:400px; border-radius:5px; border:1px solid var(--card-border); font-size:1rem; margin:0.5rem auto; display:block; }
+
+@media(max-width:768px){ header { flex-direction: column; gap: 0.5rem; } nav a { margin-left:0.8rem; font-size:0.9rem; } .hero h2 { font-size:1.5rem; } .hero p { font-size:1rem; } .about h2 { font-size:1.5rem; } }
+</style>
+</head>
+<body data-theme="light">
+
+<header>
+  <h1>Gift Kapokola Quotes</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Quotes</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+  <button class="theme-toggle" id="themeToggle">Switch Theme</button>
+</header>
+
+<input type="text" id="searchInput" placeholder="Search quotes...">
+
+<section class="hero">
+  <h2>Welcome to Gift Kapokola Quotes</h2>
+  <p>Discover inspiration, motivation, and wisdom one quote at a time.</p>
+</section>
+
+<!-- Add quote form -->
+<section class="add-quote" style="text-align:center; margin:2rem 0;">
+  <input type="text" id="newQuoteInput" placeholder="Enter your quote...">
+  <input type="text" id="newQuoteAuthor" placeholder="Author">
+  <input type="text" id="newQuoteCategory" placeholder="Category">
+  <button id="addQuoteBtn">Add Quote</button>
+</section>
+
+<div class="total-views" id="totalViews">Total Views: 0</div>
+
+<h3 class="section-title">Popular Quotes</h3>
+<section class="quotes-container" id="popularQuotesContainer"></section>
+
+<h3 class="section-title">All Quotes</h3>
+<section class="quotes-container" id="quotesContainer"></section>
+<button class="load-more-btn" id="loadMore">Load More</button>
+
+<section class="about">
+  <h2>About Gift Kapokola</h2>
+  <p>Gift Kapokola is a passionate curator of quotes that inspire, motivate, and uplift. Every quote carries a message of hope and positivity, sharing wisdom with everyone who visits.</p>
+</section>
+
+<footer>
+  &copy;Gift Kapokola Quotes | #GiftKapokolaQuotes  
+  <div>
+    <a href="https://www.facebook.com/">Facebook</a> |
+    <a href="https://www.instagram.com/">Instagram</a> |
+    <a href="https://www.youtube.com/">YouTube</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast">Quote copied!</div>
+
+<script>
+const quotes = [
+  { text: "Believe in yourself and all that you are.", author: "Anonymous", category: "Motivation", likes: 12, views: 45 },
+  { text: "Every day is a second chance.", author: "Anonymous", category: "Inspiration", likes: 8, views: 32 },
+  { text: "Happiness depends upon ourselves.", author: "Aristotle", category: "Happiness", likes: 15, views: 50 }
+];
+
+const popularContainer = document.getElementById('popularQuotesContainer');
+const quotesContainer = document.getElementById('quotesContainer');
+const totalViewsDisplay = document.getElementById('totalViews');
+const themeToggle = document.getElementById('themeToggle');
+const loadMoreBtn = document.getElementById('loadMore');
+const toast = document.getElementById('toast');
+const searchInput = document.getElementById('searchInput');
+const newQuoteInput = document.getElementById('newQuoteInput');
+const newQuoteAuthor = document.getElementById('newQuoteAuthor');
+const newQuoteCategory = document.getElementById('newQuoteCategory');
+const addQuoteBtn = document.getElementById('addQuoteBtn');
+
+let currentIndex = 0;
+
+function showToast(message){
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),2000);
+}
+
+function copyQuote(quote){
+  const formatted = `"${quote.text}" — ${quote.author || "Unknown"} 
+Category: ${quote.category || "General"}
+©Gift Kapokola Quotes 
+#GiftKapokolaQuotes`;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(formatted).then(()=>showToast('Quote copied!')).catch(()=>fallbackCopy(formatted));
+  } else { fallbackCopy(formatted); }
+}
+
+function fallbackCopy(text){
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  try { document.execCommand('copy'); showToast('Quote copied!'); }
+  catch(e){ alert('Copy failed, please copy manually.'); }
+  document.body.removeChild(textarea);
+}
+
+function createQuoteCard(quote){
+  const card = document.createElement('div');
+  card.classList.add('quote-card');
+  card.innerHTML = `
+    <div class="quote-text">"${quote.text}"</div>
+    <div class="quote-author">${quote.author || "Unknown"}</div>
+    <div class="quote-category">${quote.category || "General"}</div>
+    <div class="quote-footer">
+      <div class="stats"><span class="like-count">${quote.likes}</span> ❤️ | 👁️ ${quote.views}</div>
+      <div>
+        <button class="like-button">❤️</button>
+        <button class="copy-button">Copy</button>
+      </div>
+    </div>
+  `;
+  setTimeout(()=>card.classList.add('show'),50);
+
+  const likeBtn = card.querySelector('.like-button');
+  const likeCount = card.querySelector('.like-count');
+  const copyBtn = card.querySelector('.copy-button');
+
+  likeBtn.addEventListener('click', ()=>{
+    if(!likeBtn.classList.contains('liked')){
+      quote.likes++;
+      likeCount.textContent = quote.likes;
+      likeBtn.classList.add('liked');
+      setTimeout(()=>likeBtn.classList.remove('liked'),300);
+    }
+  });
+
+  copyBtn.addEventListener('click', ()=> copyQuote(quote));
+
+  return card;
+}
+
+// Render popular quotes
+function renderPopularQuotes(){
+  popularContainer.innerHTML = '';
+  const popularQuotes = [...quotes].sort((a,b)=>b.likes - a.likes).slice(0,3);
+  popularQuotes.forEach(quote=>popularContainer.appendChild(createQuoteCard(quote)));
+}
+
+// Render quotes (supports filtering)
+function renderQuotesFiltered(filteredQuotes){
+  quotesContainer.innerHTML = '';
+  currentIndex = 0;
+  loadMoreBtn.style.display = 'block';
+  filteredQuotes.forEach((quote,index)=>{
+    if(index<3){
+      quotesContainer.appendChild(createQuoteCard(quote));
+      currentIndex++;
+    }
+  });
+  updateTotalViews(filteredQuotes);
+}
+
+// Update total views
+function updateTotalViews(filtered=null){
+  const source = filtered || quotes.slice(0,currentIndex);
+  const totalViews = source.reduce((sum,q)=>sum+q.views,0);
+  totalViewsDisplay.textContent = `Total Views: ${totalViews}`;
+}
+
+// Initial render
+renderPopularQuotes();
+renderQuotesFiltered(quotes);
+
+// Search functionality - live update total views
+searchInput.addEventListener('input', ()=>{
+  const query = searchInput.value.toLowerCase();
+  const filteredQuotes = quotes.filter(q => 
+    q.text.toLowerCase().includes(query) ||
+    (q.author && q.author.toLowerCase().includes(query)) ||
+    (q.category && q.category.toLowerCase().includes(query))
+  );
+  renderQuotesFiltered(filteredQuotes);
+});
+
+// Load more with search
+loadMoreBtn.addEventListener('click', ()=>{
+  const query = searchInput.value.toLowerCase();
+  const filteredQuotes = quotes.filter(q => 
+    q.text.toLowerCase().includes(query) ||
+    (q.author && q.author.toLowerCase().includes(query)) ||
+    (q.category && q.category.toLowerCase().includes(query))
+  );
+  if(currentIndex >= filteredQuotes.length){ loadMoreBtn.style.display='none'; return; }
+  const card = createQuoteCard(filteredQuotes[currentIndex]);
+  quotesContainer.appendChild(card);
+  currentIndex++;
+  updateTotalViews(filteredQuotes);
+  if(currentIndex >= filteredQuotes.length){ loadMoreBtn.style.display='none'; }
+});
+
+// Infinite scroll
+window.addEventListener('scroll', ()=>{
+  if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 100){
+    loadMoreBtn.click();
+  }
+});
+
+// Theme toggle
+themeToggle.addEventListener('click', ()=>{
+  const currentTheme = document.body.getAttribute('data-theme');
+  document.body.setAttribute('data-theme', currentTheme==='light' ? 'dark':'light');
+});
+
+// Add new quote
+addQuoteBtn.addEventListener('click', ()=>{
+  const text = newQuoteInput.value.trim();
+  const author = newQuoteAuthor.value.trim();
+  const category = newQuoteCategory.value.trim();
+  if(text === "") { showToast("Please enter a quote."); return; }
+
+  const newQuote = { text, author, category, likes:0, views:0 };
+  quotes.push(newQuote);
+
+  const query = searchInput.value.toLowerCase();
+  if(text.toLowerCase().includes(query) || (author && author.toLowerCase().includes(query)) || (category && category.toLowerCase().includes(query))){
+    const card = createQuoteCard(newQuote);
+    quotesContainer.appendChild(card);
+    currentIndex++;
+    updateTotalViews(quotes.filter(q =>
+      q.text.toLowerCase().includes(query) ||
+      (q.author && q.author.toLowerCase().includes(query)) ||
+      (q.category && q.category.toLowerCase().includes(query))
+    ));
+  }
+
+  newQuoteInput.value = "";
+  newQuoteAuthor.value = "";
+  newQuoteCategory.value = "";
+  renderPopularQuotes();
+  showToast("Quote added!");
+});
+</script>
+</body>
+</html>
